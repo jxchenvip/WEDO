@@ -1,5 +1,4 @@
 #WEIDO(此项目仅供个人使用)
-===
 >如果您的网络情况不是很理想，我已将所有`plugins`上传至网盘，您可以直接下载然后正常使用它。
 
 [下载地址](http://pan.baidu.com/disk/home?fr=ibaidu#list/path=%2FWEIDO)
