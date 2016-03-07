@@ -22,6 +22,13 @@ git [下载地址](http://git-scm.com/download/)
 
 安装完成之后，您需要先配置您的git环境，
 
+国外npm安装插件的速度太慢，是在忍受不了，我们先替换下npm，淘宝对npm做镜像，没10分钟同步一次，可以说，是实时同步的，不用担心插件版本不统一的问题，好了我先来安装一下。
+
+```
+npm install cnpm -g
+npm install cnpm -g --registry=https://registry.npm.taobao.org
+```
+这样就可以替换`npm`的服务器了，下面所有的`npm`替换成`cnpm`即可
 ##设置Git的user name和email
 
 ```
