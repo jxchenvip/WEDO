@@ -20,7 +20,6 @@ var gulp = require('gulp'),
     gulpif = require('gulp-if'),
     gulpPostcss = require('gulp-postcss'),
     postcss = require('postcss'),
-    //sass = require('gulp-sass'),
     size = require('gulp-size'),
     sourcemaps = require('gulp-sourcemaps'),
     useref = require('gulp-useref'),
@@ -38,6 +37,9 @@ var gulp = require('gulp'),
     momocss = require('postcss-momocss'),
 	crip = require('postcss-crip'),
 	clean = require('postcss-clean');
+
+
+
 
 var Base = function() {
     this.url = process.cwd();
@@ -238,11 +240,6 @@ gulp.task('styles', function() {
     return gulp.src('sass/*.css')
         .pipe(plumber())
         .pipe(sourcemaps.init())
-        //.pipe(sass.sync({
-        //    outputStyle: 'expanded',
-        //    precision: 10,
-        //    includePaths: ['.']
-        //}).on('error', sass.logError))
         .pipe(gulpPostcss(processors))
         //.pipe(sourcemaps.write())
         .pipe(gulp.dest('css/'))
