@@ -20,7 +20,7 @@ var gulp = require('gulp'),
     gulpif = require('gulp-if'),
     gulpPostcss = require('gulp-postcss'),
     postcss = require('postcss'),
-    sass = require('gulp-sass'),
+    //sass = require('gulp-sass'),
     size = require('gulp-size'),
     sourcemaps = require('gulp-sourcemaps'),
     useref = require('gulp-useref'),
@@ -33,7 +33,11 @@ var gulp = require('gulp'),
     updateRule = require('postcss-sprites').updateRule,
     seajs = require('gulp-seajs'),
     jade = require('gulp-jade'),
-    reload = browserSync.reload;
+    reload = browserSync.reload,
+    postcssNested = require('postcss-nested'),
+    momocss = require('postcss-momocss'),
+	crip = require('postcss-crip'),
+	clean = require('postcss-clean');
 
 var Base = function() {
     this.url = process.cwd();
@@ -129,7 +133,8 @@ gulp.task('styles', function() {
                     return Promise.resolve();
                 }
             }),
-            cssMqpacker({
+			postcssNested,
+			cssMqpacker({
                 sort: function(a, b) {
                     return a.localeCompare(b);
                 }
@@ -143,7 +148,9 @@ gulp.task('styles', function() {
                 "sort-order": "yandex"
             }),
             postcssShort,
-            cssgrace
+            cssgrace,
+			crip,
+			clean
         ];
     } else {
         var processors = [
@@ -205,6 +212,7 @@ gulp.task('styles', function() {
                     return Promise.resolve();
                 }
             }),
+			postcssNested,
             cssMqpacker({
                 sort: function(a, b) {
                     return a.localeCompare(b);
@@ -222,19 +230,21 @@ gulp.task('styles', function() {
             autorem({
                 legacy: false,
                 baseFontSize: 32
-            })
+            }),
+			crip,
+			//clean
         ];
     }
-    return gulp.src('sass/*.scss')
+    return gulp.src('sass/*.css')
         .pipe(plumber())
         .pipe(sourcemaps.init())
-        .pipe(sass.sync({
-            outputStyle: 'expanded',
-            precision: 10,
-            includePaths: ['.']
-        }).on('error', sass.logError))
+        //.pipe(sass.sync({
+        //    outputStyle: 'expanded',
+        //    precision: 10,
+        //    includePaths: ['.']
+        //}).on('error', sass.logError))
         .pipe(gulpPostcss(processors))
-        .pipe(sourcemaps.write())
+        //.pipe(sourcemaps.write())
         .pipe(gulp.dest('css/'))
         .pipe(reload({ stream: true }));
 });
@@ -256,7 +266,7 @@ gulp.task('serve', ['styles'], function() {
         './images/**/*',
     ], ['copy']).on('change', reload);
 
-    gulp.watch('./sass/**/*.scss', ['styles', 'copy']);
+    gulp.watch('./sass/**/*.css', ['styles', 'copy']);
     gulp.watch('./jade/**/*.jade', ['jade'], 'copy');
     gulp.watch('./js/**/*.js', ['scripts', 'copy']);
 });
