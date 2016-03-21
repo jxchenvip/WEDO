@@ -9,8 +9,8 @@ var gulp = require('gulp'),
     autorem = require('autorem'),
     browserSync = require('browser-sync'),
     cssMqpacker = require('css-mqpacker'),
-    atImport = require("postcss-import")
-opacity = require('postcss-opacity'),
+    atImport = require("postcss-import"),
+    opacity = require('postcss-opacity'),
     messages = require('postcss-messages'),
     del = require('del'),
     autoprefixer = require('autoprefixer'),
@@ -338,4 +338,27 @@ gulp.task('min', ['imgmin'], function() {
 // 确定无误之后可以删除备份文件
 gulp.task('clean1', ['clean'], function() {
     console.log('您已删除原始图片！！路径为：' + './images/_imgbackups')
+});
+
+gulp.task('clean1', ['clean'], function() {
+    console.log('您已删除原始图片！！路径为：' + './images/_imgbackups')
+});
+
+gulp.task('zip', function() {
+    function checkTime(i) {
+        if (i < 10) {
+            i = "0" + i
+        }
+        return i
+    }
+    var d = new Date();
+    var year = d.getFullYear();
+    var month = checkTime(d.getMonth() + 1);
+    var day = checkTime(d.getDate());
+    var hour = checkTime(d.getHours());
+    var minute = checkTime(d.getMinutes());
+
+    return gulp.src(['./dest/**/*'])
+        .pipe(zip(year + month + day + hour + minute + '.zip'))
+        .pipe(gulp.dest('./zip'));
 });
